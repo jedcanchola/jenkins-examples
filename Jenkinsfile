@@ -2,19 +2,21 @@ pipeline {
     agent any
 
     environment {
-        AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-secret-key-id')
-        AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
+        USER_CREDS     = credentials('USER_CREDS')
+        USER_CREDS_USR  = credentials('USER_CREDS')
+        USER_CREDS_PSW  = credentials('USER_CREDS')
     }
-    
+
     stages {
         stage('Example stage 1') {
             steps {
-                echo "ID: ${AWS_ACCESS_KEY_ID}"
+                echo "User credentials: ${USER_CREDS}"
             }
         }
         stage('Example stage 2') {
             steps {
-                echo "Secret: ${AWS_SECRET_ACCESS_KEY }"
+                echo "Username: ${USER_CREDS_USR}"
+                echo "Password: ${USER_CREDS_PSW}"
             }
         }
     }
