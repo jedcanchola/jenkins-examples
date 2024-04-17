@@ -1,31 +1,21 @@
 pipeline {
-  agent any
-
-  stages{
-    stage('Build') {
-      steps {
-        sh 'make' 
-        archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true 
-      }
+    agent {
+        // Define agent details here
     }
-    stage('Test') {
-      steps {
-        /* `make check` returns non-zero on test failures,
-        * using `true` to allow the Pipeline to continue nonetheless
-        */
-        sh 'make check || true' 
-        junit '**/target/*.xml' 
-      }
+    environment {
+        AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-secret-key-id')
+        AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
     }
-    stage('Deploy') {
-      when {
-        expression {
-          currentBuild.result == null || currentBuild.result == 'SUCCESS' 
+    stages {
+        stage('Example stage 1') {
+            steps {
+                echo "ID: ${AWS_ACCESS_KEY_ID}"
+            }
         }
-      }
-      steps {
-          sh 'make publish'
-      }
+        stage('Example stage 2') {
+            steps {
+                echo "Secret: ${AWS_SECRET_ACCESS_KEY }"
+            }
+        }
     }
-  }
 }
