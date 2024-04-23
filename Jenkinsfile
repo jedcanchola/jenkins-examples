@@ -14,6 +14,7 @@ pipeline {
     }
     failure {
       slackSend channel: 'alerts', message: 'Pipeline failed'
+      mail bcc: '', body: 'Sorry it  failed', cc: '', from: '', replyTo: '', subject: 'Pipeline Failed', to: 'jedcanchola@gmail.com'
     }
   }
 }
