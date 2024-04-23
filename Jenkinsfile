@@ -13,7 +13,7 @@ pipeline {
       junit '**/target/*.xml'
     }
     failure {
-      mali to: jedcanchola@gmail.com, subject: 'The Pipeline falied!!'
+      slackSend channel: 'alerts', message: 'Pipeline failed'
     }
   }
 }
